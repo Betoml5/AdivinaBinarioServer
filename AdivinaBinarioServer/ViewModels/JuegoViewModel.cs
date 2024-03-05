@@ -13,7 +13,7 @@ namespace AdivinaBinarioServer.ViewModels
     public class JuegoViewModel : INotifyPropertyChanged
     {
         JuegoServer servidor = new JuegoServer();
-        ObservableCollection<string> JugadoresConRespuestaCorrecta { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> JugadoresConRespuestaCorrecta { get; set; } = new ObservableCollection<string>();
         public string NumeroBinario { get; set; }
 
 
@@ -28,11 +28,22 @@ namespace AdivinaBinarioServer.ViewModels
             servidor.OnRespuestaRecibida += Servidor_OnRespuestaRecibida    ;
         }
 
+
         private bool ValidarNumero(int numeroDecimal, string numeroBinario)
         {
             // Convierte el número decimal a binario y luego compara con el número binario dado
-            string binario = Convert.ToString(numeroDecimal, 2);
-            return binario == numeroBinario;
+            //string binario = Convert.ToString(numeroDecimal, 2);
+            int valorDecimal = 0;
+            int expo = 0;
+
+            for (int i = numeroBinario.Length - 1; i >= 0; i--)
+            {
+                int digit = numeroBinario[i] - '0'; // Convertir el carácter en un valor entero
+
+                valorDecimal += digit * (int)Math.Pow(2, expo);
+                expo++;
+            }
+            return valorDecimal == numeroDecimal;
         }
 
         private string GenerarNumeroBinarioRandom()

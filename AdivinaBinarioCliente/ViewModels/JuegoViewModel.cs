@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,6 +27,8 @@ namespace AdivinaBinarioCliente.ViewModels
         private void EnviarRespuesta()
         {
             juegoService.Servidor = Ip;
+            Respuesta.Jugador = Dns.GetHostName();
+            //var data = Dns.GetHostAddresses(Dns.GetHostName()).Where(x=>x.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
             juegoService.EnviarRespuesta(Respuesta);
         }
     }

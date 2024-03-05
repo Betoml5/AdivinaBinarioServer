@@ -3,26 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdivinaBinarioCliente"
+        xmlns:local="clr-namespace:AdivinaBinarioCliente" xmlns:viewmodels="clr-namespace:AdivinaBinarioCliente.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewmodels:JuegoViewModel></viewmodels:JuegoViewModel>
+    </Window.DataContext>
     <DockPanel Background="#000">
         <DockPanel.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="Arial"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
         </DockPanel.Resources>
         <StackPanel DockPanel.Dock="Top">
             <!--<TextBlock FontSize="18" Foreground="#fff" Margin="0,20,0,0" HorizontalAlignment="Center">Direccion IP: <Run Foreground="#fff" Text="{Binding Ip}"></Run></TextBlock>-->
+
             <TextBlock Text="Adivina el número binario" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+
             <!--<TextBlock Foreground="red" HorizontalAlignment="Center" FontSize="24" Text="{Binding NumeroBinario}" ></TextBlock>-->
         </StackPanel>
-        <StackPanel DockPanel.Dock="Right">
-            <TextBlock Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
-            <TextBox x:Name="txtNumero" Width="200" Height="30" Margin="0,10,0,10"/>
+        
+        
 
-            <Button x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10"/>
+        <StackPanel DockPanel.Dock="Right">
+
+            <StackPanel Margin="0, 40">
+                <TextBlock Foreground="#fff" HorizontalAlignment="Center">IP del destino:</TextBlock>
+                <TextBox Width="200" Height="30" Margin="0,10,0,10" Text="{Binding Ip}"/>
+            </StackPanel>
+
+            <TextBlock Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
+            <TextBox x:Name="txtNumero" Width="200" Height="30" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
+
+            <Button x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
             <!--<TextBlock Foreground="White" FontSize="20" Margin="20">Mensajes del servidor</TextBlock>
             <ListBox>
 

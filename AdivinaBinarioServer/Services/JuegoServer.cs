@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AdivinaBinarioServer.Services
 {
@@ -31,12 +32,16 @@ namespace AdivinaBinarioServer.Services
 
             RespuestaDTO respuesta = JsonSerializer.Deserialize<RespuestaDTO>(Encoding.UTF8.GetString(buffer));
 
-            if(respuesta != null)
+            if (respuesta != null)
             {
                 // Aquí se dispara el evento pero deberia ser en el hilo principal22
-                OnRespuestaRecibida?.Invoke(this, respuesta);
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    OnRespuestaRecibida?.Invoke(this, respuesta);
+
+                }));
             }
-            
+
 
         }
 

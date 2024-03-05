@@ -10,6 +10,6 @@ namespace AdivinaBinarioCliente.Models.DTOs
     {
         public int Respuesta { get; set; }
         public string Jugador { get; set; }
-
+        //public string IPremitente { get; set; }
     }
 }
