@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdivinaBinarioServer", "AdivinaBinarioServer\AdivinaBinarioServer.csproj", "{D08E6797-C39E-4795-9A85-909FA00F85FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdivinaBinarioCliente", "AdivinaBinarioCliente\AdivinaBinarioCliente.csproj", "{1496AA5D-D69A-475E-B6B3-B4EEB91B33A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D08E6797-C39E-4795-9A85-909FA00F85FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D08E6797-C39E-4795-9A85-909FA00F85FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D08E6797-C39E-4795-9A85-909FA00F85FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1496AA5D-D69A-475E-B6B3-B4EEB91B33A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1496AA5D-D69A-475E-B6B3-B4EEB91B33A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1496AA5D-D69A-475E-B6B3-B4EEB91B33A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1496AA5D-D69A-475E-B6B3-B4EEB91B33A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
