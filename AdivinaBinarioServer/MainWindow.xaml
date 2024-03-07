@@ -23,7 +23,7 @@
         </StackPanel>
         <StackPanel DockPanel.Dock="Right">
             <TextBlock Foreground="White" FontSize="20" Margin="20">Mensajes del servidor</TextBlock>
-            <ListBox ItemsSource="{Binding JugadoresConRespuestaCorrecta}">
+            <ListBox ItemsSource="{Binding JugadoresConRespuestaCorrecta}" DisplayMemberPath="Nombre">
                 
             </ListBox>
         </StackPanel>

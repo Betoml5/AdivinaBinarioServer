@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\DTOs\JugadorDTO.cs" />
     <Compile Include="Models\DTOs\RespuestaDTO.cs" />
     <Compile Include="Services\JuegoServer.cs" />
     <Compile Include="ViewModels\JuegoViewModel.cs" />

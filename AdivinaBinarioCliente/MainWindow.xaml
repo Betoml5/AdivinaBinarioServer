@@ -40,7 +40,23 @@
             <TextBlock Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
             <TextBox x:Name="txtNumero" Width="200" Height="30" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
 
-            <Button x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
+            <Button IsEnabled="{Binding BotonHabilitado}" x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
+            <TextBlock Text="{Binding Felicitacion}" Foreground="White" HorizontalAlignment="Center" FontSize="24" Margin="10"></TextBlock>
+            <TextBlock>
+                <TextBlock.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="FontSize" Value="20"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        <Setter Property="Margin" Value="0,10,0,10"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BotonHabilitado}" Value="False">
+                                <Setter Property="Text" Value="No se permiten mas respuestas"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Resources>
+            </TextBlock>
             <!--<TextBlock Foreground="White" FontSize="20" Margin="20">Mensajes del servidor</TextBlock>
             <ListBox>
 

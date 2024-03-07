@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdivinaBinarioCliente.Models.DTOs
 {
-    public class RespuestaDTO
+    public  class JugadorDTO
     {
-        public int Respuesta { get; set; }
-        public string NombreJugador { get; set; }
-        public string IPJugador { get; set; }
+        public string Nombre { get; set; }
+        public string IP { get; set; }
     }
 }

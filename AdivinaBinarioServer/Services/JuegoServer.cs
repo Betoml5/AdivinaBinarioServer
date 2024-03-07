@@ -15,7 +15,7 @@ namespace AdivinaBinarioServer.Services
     public class JuegoServer
     {
         public event EventHandler<RespuestaDTO> OnRespuestaRecibida;
-
+        private UdpClient UDPServer  = new UdpClient(5000);
         public JuegoServer()
         {
             var hilo = new Thread(Iniciar);
@@ -23,10 +23,21 @@ namespace AdivinaBinarioServer.Services
             hilo.Start();
         }
 
+        public void MandarFelicitacion(string ip)
+        {
+            var remoto = new IPEndPoint(IPAddress.Parse(ip), 5001);
+            var json = JsonSerializer.Serialize("¡Felicidades acertaste!");
+            var bytes = Encoding.UTF8.GetBytes(json);
+                
+            //server
+            UDPServer.Send(bytes, bytes.Length, remoto);
+           
+        }
+
+
 
         void Iniciar()
         {
-            UdpClient UDPServer = new UdpClient(5000);
             IPEndPoint IpRemota = new IPEndPoint(IPAddress.Any, 5000);
             byte[] buffer = UDPServer.Receive(ref IpRemota);
 
