@@ -38,22 +38,26 @@ namespace AdivinaBinarioServer.Services
 
         void Iniciar()
         {
-            IPEndPoint IpRemota = new IPEndPoint(IPAddress.Any, 5000);
-            byte[] buffer = UDPServer.Receive(ref IpRemota);
-
-            RespuestaDTO respuesta = JsonSerializer.Deserialize<RespuestaDTO>(Encoding.UTF8.GetString(buffer));
-
-            if (respuesta != null)
+            while (true)
             {
-                // Aquí se dispara el evento pero deberia ser en el hilo principal22
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+
+
+                IPEndPoint IpRemota = new IPEndPoint(IPAddress.Any, 5000);
+                byte[] buffer = UDPServer.Receive(ref IpRemota);
+
+                RespuestaDTO respuesta = JsonSerializer.Deserialize<RespuestaDTO>(Encoding.UTF8.GetString(buffer));
+
+                if (respuesta != null)
                 {
-                    OnRespuestaRecibida?.Invoke(this, respuesta);
+                    // Aquí se dispara el evento pero deberia ser en el hilo principal22
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        OnRespuestaRecibida?.Invoke(this, respuesta);
 
-                }));
+                    }));
+                }
+
             }
-
-
         }
 
     }

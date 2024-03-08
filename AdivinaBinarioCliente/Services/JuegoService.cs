@@ -29,7 +29,7 @@ namespace AdivinaBinarioCliente.Services
         {
             IPEndPoint IpRemota = new IPEndPoint(IPAddress.Any, 5001);
             byte[] buffer = cliente.Receive(ref IpRemota);
-
+            
             string respuesta = JsonSerializer.Deserialize<string>(Encoding.UTF8.GetString(buffer));
 
             if (respuesta != null)
@@ -45,6 +45,7 @@ namespace AdivinaBinarioCliente.Services
 
         }
 
+        
 
 
         public void EnviarRespuesta(RespuestaDTO respuesta)
@@ -54,6 +55,8 @@ namespace AdivinaBinarioCliente.Services
             var json = JsonSerializer.Serialize(respuesta);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             cliente.Send(bytes, bytes.Length, ipEndPoint);
+
+            
         }
 
         public event EventHandler<string> OnFelicitacionRecibida;

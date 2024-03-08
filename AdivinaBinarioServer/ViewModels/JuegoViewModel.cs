@@ -13,16 +13,17 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 
-namespace AdivinaBinarioServer.ViewModels 
-{ 
+namespace AdivinaBinarioServer.ViewModels
+{
     public class JuegoViewModel : INotifyPropertyChanged
     {
         JuegoServer servidor = new JuegoServer();
         public ObservableCollection<JugadorDTO> JugadoresConRespuestaCorrecta { get; set; } = new ObservableCollection<JugadorDTO>();
         public string NumeroBinario { get; set; }
+        public string NumeroBinarioEscondido { get; set; }
         public string Ip { get; set; } = "0.0.0.0";
 
-        //private System.Timers.Timer OcultarNumeroTimer = new System.Timers.Timer(10000);
+        private System.Timers.Timer OcultarNumeroTimer = new System.Timers.Timer(5000);
         //private System.Timers.Timer ReiniciarJuegoTimer = new System.Timers.Timer(35000);
         private System.Timers.Timer EnviarFelicitacionesTimer = new System.Timers.Timer(25000);
 
@@ -32,10 +33,12 @@ namespace AdivinaBinarioServer.ViewModels
 
         private void IniciarTimers()
         {
-            //OcultarNumeroTimer.Elapsed += (sender, e) =>
-            //{
-            //    OcultarNumero();
-            //};
+            OcultarNumeroTimer.Enabled = true;
+            OcultarNumeroTimer.Elapsed += (sender, e) =>
+            {
+                OcultarNumero();
+
+            };
 
             //ReiniciarJuegoTimer.Elapsed += (sender, e) =>
             //{
@@ -43,18 +46,21 @@ namespace AdivinaBinarioServer.ViewModels
             //    ReiniciarJuegoTimer.Stop();
 
             //};
+            EnviarFelicitacionesTimer.AutoReset = true;
+            EnviarFelicitacionesTimer.Enabled = true;
 
             EnviarFelicitacionesTimer.Elapsed += (sender, e) =>
             {
                 EnviarFelicitaciones();
                 EnviarFelicitacionesTimer.Stop();
+                EnviarFelicitacionesTimer.Start();
+
+                OcultarNumeroTimer.Start();
             };
 
 
 
 
-            EnviarFelicitacionesTimer.AutoReset = true;
-            EnviarFelicitacionesTimer.Enabled = true;
 
             //OcultarNumeroTimer.AutoReset = true;
             //OcultarNumeroTimer.Enabled = true;
@@ -68,7 +74,7 @@ namespace AdivinaBinarioServer.ViewModels
 
         public JuegoViewModel()
         {
-            NumeroBinario = GenerarNumeroBinarioRandom();
+            GenerarNumeroBinarioRandom();
             var ips = Dns.GetHostAddresses(Dns.GetHostName());
             Ip = ips.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
             servidor.OnRespuestaRecibida += Servidor_OnRespuestaRecibida;
@@ -81,7 +87,7 @@ namespace AdivinaBinarioServer.ViewModels
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 JugadoresConRespuestaCorrecta.Clear();
-                NumeroBinario = GenerarNumeroBinarioRandom();
+                GenerarNumeroBinarioRandom();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumeroBinario"));
             }));
         }
@@ -89,6 +95,7 @@ namespace AdivinaBinarioServer.ViewModels
         void OcultarNumero()
         {
             NumeroBinario = "";
+            OcultarNumeroTimer.Stop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumeroBinario"));
         }
 
@@ -100,11 +107,11 @@ namespace AdivinaBinarioServer.ViewModels
             }
 
             ReiniciarJuego();
-            
+
 
         }
 
-        
+
 
         private bool ValidarNumero(int numeroDecimal, string numeroBinario)
         {
@@ -123,7 +130,7 @@ namespace AdivinaBinarioServer.ViewModels
             return valorDecimal == numeroDecimal;
         }
 
-        private string GenerarNumeroBinarioRandom()
+        private void GenerarNumeroBinarioRandom()
         {
             Random rand = new Random();
             string numeroBinario = "";
@@ -135,18 +142,26 @@ namespace AdivinaBinarioServer.ViewModels
                 numeroBinario += digito;
             }
 
-            return numeroBinario;
+            NumeroBinario = numeroBinario;
+            NumeroBinarioEscondido = numeroBinario;
         }
 
         private void Servidor_OnRespuestaRecibida(object sender, Models.DTOs.RespuestaDTO e)
         {
-            var EsCorrecto = ValidarNumero(e.Respuesta, NumeroBinario);
+            var EsCorrecto = ValidarNumero(e.Respuesta, NumeroBinarioEscondido);
             if (EsCorrecto)
             {
-                JugadoresConRespuestaCorrecta.Add(new JugadorDTO() { 
-                    Nombre = e.NombreJugador,
-                    IP = e.IPJugador
-                });
+                
+                var proye = JugadoresConRespuestaCorrecta.Where(x=>x.IP==e.IPJugador).Count();
+                if (proye==0)
+                {
+                    var jug = new JugadorDTO
+                    {
+                        Nombre = e.NombreJugador,
+                        IP = e.IPJugador
+                    };
+                    JugadoresConRespuestaCorrecta.Add(jug);
+                }
             }
         }
 
