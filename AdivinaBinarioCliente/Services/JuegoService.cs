@@ -12,11 +12,11 @@ using System.Windows;
 
 namespace AdivinaBinarioCliente.Services
 {
-    public  class JuegoService
+    public class JuegoService
     {
 
         private UdpClient cliente = new UdpClient(5001);
-        public string Servidor { get; set; } = "0.0.0.0";
+        public string Servidor { get; set; } = "127.0.0.1";
 
         public JuegoService()
         {
@@ -28,24 +28,34 @@ namespace AdivinaBinarioCliente.Services
         void Iniciar()
         {
             IPEndPoint IpRemota = new IPEndPoint(IPAddress.Any, 5001);
-            byte[] buffer = cliente.Receive(ref IpRemota);
-            
-            string respuesta = JsonSerializer.Deserialize<string>(Encoding.UTF8.GetString(buffer));
-
-            if (respuesta != null)
+            while (true)
             {
-                // Aquí se dispara el evento pero deberia ser en el hilo principal22
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+                try
                 {
-                    OnFelicitacionRecibida?.Invoke(this, respuesta);
+                    byte[] buffer = cliente.Receive(ref IpRemota);
 
-                }));
+
+                    string respuesta = JsonSerializer.Deserialize<string>(Encoding.UTF8.GetString(buffer));
+
+                    if (respuesta != null)
+                    {
+                        // Aquí se dispara el evento pero deberia ser en el hilo principal22
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            OnFelicitacionRecibida?.Invoke(this, respuesta);
+
+                        }));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
             }
-
-
         }
 
-        
+
 
 
         public void EnviarRespuesta(RespuestaDTO respuesta)
@@ -56,7 +66,7 @@ namespace AdivinaBinarioCliente.Services
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             cliente.Send(bytes, bytes.Length, ipEndPoint);
 
-            
+
         }
 
         public event EventHandler<string> OnFelicitacionRecibida;

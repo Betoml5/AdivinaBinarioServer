@@ -3,28 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdivinaBinarioServer" xmlns:viewmodels="clr-namespace:AdivinaBinarioServer.ViewModels"
+        xmlns:local="clr-namespace:AdivinaBinarioServer" 
+        xmlns:viewmodels="clr-namespace:AdivinaBinarioServer.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        >
     <Window.DataContext>
         <viewmodels:JuegoViewModel></viewmodels:JuegoViewModel>
     </Window.DataContext>
-    <DockPanel Background="#000">
-        <DockPanel.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="Arial"/>
-                <Setter Property="FontWeight" Value="Bold"/>
-            </Style>
-        </DockPanel.Resources>
+    <DockPanel Background="#676767">
         <StackPanel DockPanel.Dock="Top">
-            <TextBlock FontSize="18" Foreground="#fff" Margin="0,20,0,0" HorizontalAlignment="Center">Direccion IP: <Run Foreground="#fff" Text="{Binding Ip}"></Run></TextBlock>
+
+            <materialDesign:ColorZone 
+                Mode="PrimaryMid" 
+                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                Padding="16">
+                <StackPanel 
+                    Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" HorizontalAlignment="Center">Direccion IP: <Run Text="{Binding Ip}"></Run></TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+
             <TextBlock Text="Adivina el número binario" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,20"/>
-            <TextBlock Foreground="red" HorizontalAlignment="Center" FontSize="24" Text="{Binding NumeroBinario}" ></TextBlock>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="red" HorizontalAlignment="Center" Text="{Binding NumeroBinario}"></TextBlock>
         </StackPanel>
-        <StackPanel DockPanel.Dock="Right">
-            <TextBlock Foreground="White" FontSize="20" Margin="20">Mensajes del servidor</TextBlock>
-            <ListBox ItemsSource="{Binding JugadoresConRespuestaCorrecta}" DisplayMemberPath="Nombre">
-                
+        <StackPanel DockPanel.Dock="Right" Margin="20">
+            <TextBlock Foreground="White" Style="{StaticResource MaterialDesignHeadline2TextBlock}" FontSize="20">Mensajes del servidor</TextBlock>
+            <Separator Margin="-20 0"></Separator>
+            <ListBox 
+                ItemsSource="{Binding JugadoresConRespuestaCorrecta}" 
+                Foreground="White">
             </ListBox>
         </StackPanel>
     </DockPanel>

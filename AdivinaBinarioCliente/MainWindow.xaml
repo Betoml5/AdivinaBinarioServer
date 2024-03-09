@@ -5,12 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdivinaBinarioCliente" xmlns:viewmodels="clr-namespace:AdivinaBinarioCliente.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        >
     <Window.DataContext>
         <viewmodels:JuegoViewModel></viewmodels:JuegoViewModel>
     </Window.DataContext>
-    <DockPanel Background="#000">
-        <DockPanel.Resources>
+    <DockPanel Background="#676767">
+        <!--<DockPanel.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="Arial"/>
                 <Setter Property="FontWeight" Value="Bold"/>
@@ -19,11 +28,21 @@
                 <Setter Property="FontSize" Value="20"></Setter>
                 <Setter Property="TextAlignment" Value="Center"/>
             </Style>
-        </DockPanel.Resources>
+        </DockPanel.Resources>-->
         <StackPanel DockPanel.Dock="Top">
             <!--<TextBlock FontSize="18" Foreground="#fff" Margin="0,20,0,0" HorizontalAlignment="Center">Direccion IP: <Run Foreground="#fff" Text="{Binding Ip}"></Run></TextBlock>-->
 
-            <TextBlock Text="Adivina el número binario" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+            <materialDesign:ColorZone 
+                Mode="PrimaryDark" 
+                materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                Padding="16">
+                <StackPanel 
+                    Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" HorizontalAlignment="Center">Adivina el número binario</TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+
+            <!--<TextBlock Text="Adivina el número binario" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,20"/>-->
 
             <!--<TextBlock Foreground="red" HorizontalAlignment="Center" FontSize="24" Text="{Binding NumeroBinario}" ></TextBlock>-->
         </StackPanel>
@@ -32,31 +51,28 @@
 
         <StackPanel DockPanel.Dock="Right">
 
-            <StackPanel Margin="0, 40">
-                <TextBlock Foreground="#fff" HorizontalAlignment="Center">IP del destino:</TextBlock>
-                <TextBox Width="200" Height="30" Margin="0,10,0,10" Text="{Binding Ip}"/>
+            <StackPanel Margin="0, 20">
+                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="#fff" HorizontalAlignment="Center">IP del destino:</TextBlock>
+                <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" CaretBrush="White"  Width="200"  Margin="0,10,0,10" Text="{Binding Ip}"/>
             </StackPanel>
 
-            <TextBlock Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
-            <TextBox x:Name="txtNumero" Width="200" Height="30" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
+            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
+            <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" CaretBrush="White" x:Name="txtNumero" Width="200" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
 
-            <Button IsEnabled="{Binding BotonHabilitado}" x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
-            <TextBlock Text="{Binding Felicitacion}" Foreground="White" HorizontalAlignment="Center" FontSize="24" Margin="10"></TextBlock>
-            <TextBlock>
-                <TextBlock.Resources>
+            <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"  Background="White" Foreground="Black" IsEnabled="{Binding BotonHabilitado}" x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
+
+            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Felicitacion}" Foreground="White" HorizontalAlignment="Center" Margin="10"></TextBlock>
+            <!--<TextBlock>
+                <TextBlock.Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="White"></Setter>
-                        <Setter Property="FontSize" Value="20"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                        <Setter Property="Margin" Value="0,10,0,10"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding BotonHabilitado}" Value="False">
                                 <Setter Property="Text" Value="No se permiten mas respuestas"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </TextBlock.Resources>
-            </TextBlock>
+                </TextBlock.Style>
+            </TextBlock>-->
             <!--<TextBlock Foreground="White" FontSize="20" Margin="20">Mensajes del servidor</TextBlock>
             <ListBox>
 

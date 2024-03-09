@@ -23,6 +23,11 @@ namespace AdivinaBinarioServer.ViewModels
         public string NumeroBinarioEscondido { get; set; }
         public string Ip { get; set; } = "0.0.0.0";
 
+        public bool HasItems
+        {
+            get { return JugadoresConRespuestaCorrecta.Count!=0;  }
+        }
+
         private System.Timers.Timer OcultarNumeroTimer = new System.Timers.Timer(5000);
         //private System.Timers.Timer ReiniciarJuegoTimer = new System.Timers.Timer(35000);
         private System.Timers.Timer EnviarFelicitacionesTimer = new System.Timers.Timer(25000);
@@ -161,6 +166,7 @@ namespace AdivinaBinarioServer.ViewModels
                         IP = e.IPJugador
                     };
                     JugadoresConRespuestaCorrecta.Add(jug);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasItems)));
                 }
             }
         }

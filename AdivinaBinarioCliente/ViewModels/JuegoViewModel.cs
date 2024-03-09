@@ -24,7 +24,7 @@ namespace AdivinaBinarioCliente.ViewModels
         public bool BotonHabilitado { get; set; } = true;
         public string Felicitacion { get; set; }
         public ICommand EnviarRespuestaCommand { get; set; }
-        public string Ip { get; set; } = "0.0.0.0";
+        public string Ip { get; set; } = "127.0.0.1";
 
         public JuegoViewModel()
         {
