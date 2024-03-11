@@ -18,7 +18,7 @@
     <Window.DataContext>
         <viewmodels:JuegoViewModel></viewmodels:JuegoViewModel>
     </Window.DataContext>
-    <DockPanel Background="#676767">
+    <DockPanel Background="#31363F">
         <!--<DockPanel.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="Arial"/>
@@ -35,6 +35,7 @@
             <materialDesign:ColorZone 
                 Mode="PrimaryDark" 
                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                Background="#76ABAE"
                 Padding="16">
                 <StackPanel 
                     Orientation="Horizontal" HorizontalAlignment="Center">
@@ -52,12 +53,12 @@
         <StackPanel DockPanel.Dock="Right">
 
             <StackPanel Margin="0, 20">
-                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="#fff" HorizontalAlignment="Center">IP del destino:</TextBlock>
-                <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" CaretBrush="White"  Width="200"  Margin="0,10,0,10" Text="{Binding Ip}"/>
+                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="#fff"  HorizontalAlignment="Center">IP del destino:</TextBlock>
+                <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Foreground="#000" Background="#fff" CaretBrush="#000"  Width="200"  Margin="0,10,0,10" Text="{Binding Ip}"/>
             </StackPanel>
 
             <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="#fff" HorizontalAlignment="Center">Ingresa un numero decimal</TextBlock>
-            <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" CaretBrush="White" x:Name="txtNumero" Width="200" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
+            <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Foreground="#000" Background="#fff" CaretBrush="#000" x:Name="txtNumero" Width="200" Margin="0,10,0,10" Text="{Binding Respuesta.Respuesta}"/>
 
             <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"  Background="White" Foreground="Black" IsEnabled="{Binding BotonHabilitado}" x:Name="btnEnviar" Content="Enviar" Width="200" Height="30" Margin="0,10,0,10" Command="{Binding EnviarRespuestaCommand}"/>
 
